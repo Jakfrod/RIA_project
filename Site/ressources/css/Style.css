@@ -1,0 +1,219 @@
+@import url(https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap);
+* {
+    box-sizing: border-box
+}
+
+body>header {
+    text-align: center;
+    padding: 20px 0 10px 0;
+    background-image: url(../images/header-background.png)
+}
+
+.images {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%
+}
+
+h1 {
+    font-family: "Permanent Marker";
+    color: #0f0;
+    display: block;
+    font-size: 60pt;
+    text-align: center
+}
+
+h2 {
+    font-family: "Permanent Marker";
+    font-size: 40px;
+    color: #0f0
+}
+
+h3 {
+    font-family: "Permanent Marker";
+    font-size: 30px;
+    color: #0f0
+}
+
+h4 {
+    font-family: "Permanent Marker";
+    font-size: 20px;
+    color: #0f0
+}
+
+p {
+    text-align: justify
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #555;
+    color: #fff
+}
+
+body>header {
+    text-align: center
+}
+
+main {
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 100px;
+    width: 100%
+}
+
+nav {
+    position: fixed;
+    width: 100%;
+    top: 0
+}
+
+article {
+    width: 80%;
+    margin: auto
+}
+
+nav ul {
+    list-style-type: none;
+    display: inline-flex;
+    border: #000 solid 2px;
+    padding: 0
+}
+
+nav li {
+    background-color: #555;
+    color: #fff
+}
+
+nav li.active {
+    border: #0f0 2px solid
+}
+
+nav li a {
+    padding: 15px 50px 15px 50px;
+    height: 100%;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 700;
+    color: #fff
+}
+
+nav li.active a,
+nav li:hover a {
+    color: #0f0;
+    background-color: rgba(100, 100, 100, .8)
+}
+
+nav li a {
+    display: block
+}
+
+nav ul li img {
+    width: 32px;
+    height: 32px;
+    margin: 4px 0 0 0;
+    padding: 0;
+    display: none
+}
+
+aside {
+    width: 30%;
+    padding: 20px;
+    min-width: 360px
+}
+
+aside>ul {
+    list-style-type: none
+}
+
+aside>ul>li {
+    margin: 10px
+}
+
+aside div {
+    box-shadow: 0 0 15px rgba(0, 0, 0, .5);
+    padding-bottom: 5px
+}
+
+aside h3 {
+    padding: .75em .75em 0 .75em
+}
+
+#articles {
+    margin: auto;
+    text-align: justify;
+    width: 90%
+}
+
+img {
+    padding-bottom: 50px
+}
+
+footer {
+    background: #999;
+    padding: 20px;
+    display: flex;
+    width: 100%;
+    justify-items: center;
+    justify-content: center
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    text-align: justify;
+    margin: 50 auto;
+    box-shadow: 1px 1px 12px #555
+}
+
+th {
+    background: #0f0;
+    color: #fff;
+    word-spacing: 7px;
+    letter-spacing: 2px;
+    padding: 10px
+}
+
+td {
+    background: #999
+}
+
+td,
+th {
+    border: 1px solid #000;
+    height: 40px;
+    text-align: center
+}
+
+@media screen and (min-width:981px) {
+    .hamburger {
+        display: none
+    }
+}
+
+@media screen and (max-width:980px) {
+    main {
+        flex-direction: column
+    }
+    nav ul {
+        flex-direction: column;
+        padding-left: 0
+    }
+    nav ul li.hamburger {
+        background-color: #0f0;
+        display: flex;
+        justify-content: center
+    }
+    nav ul li img {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        margin: 4px 0 0 0;
+        display: block
+    }
+    #articles {
+        width: 90%
+    }
+}
