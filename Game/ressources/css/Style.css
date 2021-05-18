@@ -1,0 +1,53 @@
+@import url(https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap);
+input[type=text] {
+    width: 80%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=button] {
+    width: 100%;
+    background-color: #00ff00;
+    color: white;
+    border: none;
+    font-size: 30pt;
+    font-family: 'Permanent Marker', arial;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+input[type=button]:hover {
+    background-color: #00c500;
+}
+
+body {
+    background-image: url("../images/background.png");
+    background-repeat: repeat;
+}
+
+h1 {
+    font-family: 'Permanent Marker', arial;
+    color: #0f0;
+    font-size: 60pt;
+    text-align: center
+}
+
+h2 {
+    font-family: 'Permanent Marker', arial;
+    color: #0f0;
+    font-size: 40pt;
+    text-align: center
+}
+
+#sectionLogin {
+    display: flexbox;
+    justify-items: center;
+    background-color: #555;
+    width: 40%;
+    margin: auto;
+    text-align: center;
+}
