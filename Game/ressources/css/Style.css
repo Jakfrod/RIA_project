@@ -43,7 +43,28 @@ h2 {
     text-align: center
 }
 
-#sectionLogin {
+#canvas {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.canvas {
+    background-color: aqua;
+    width: 100px;
+    height: 100px;
+}
+
+#dropZone {
+    background-color: rgb(255, 0, 0);
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    border: black solid 2px;
+}
+
+section {
     display: flexbox;
     justify-items: center;
     background-color: #555;

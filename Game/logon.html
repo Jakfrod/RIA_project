@@ -14,12 +14,23 @@
     <header>
         <h1>Deepest Dungeon</h1>
     </header>
-    <section id=sectionLogin>
+    <section id="sectionLogin">
         <header>
             <h2>What is your name hero ?</h2>
         </header>
         <input name="txtUsername" type="text" placeholder="Your username: Marco, Polo, Terminiator, ..." />
         <input name="btnSendUsername" type="button" value="I want this name !" />
+    </section>
+    <section id="selectCharacter">
+        <header>
+            <h2>Choose your character</h2>
+        </header>
+        <div id="canvas">
+            <canvas id="canvasCharacter1" class="js-dragable canvas" draggable="true"></canvas>
+            <canvas id="canvasCharacter2" class="js-dragable canvas" draggable="true"></canvas>
+        </div>
+        <div id="dropZone"></div>
+        <input name="btnChooseCharacter" type="button" value="I want this knight !" />
     </section>
 </body>
 
