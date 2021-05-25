@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     //Define the drag and drop zone
     let selectCharacters;
     const canvasZone = document.getElementById("canvas");
@@ -33,9 +33,10 @@ document.addEventListener('DOMContentLoaded', function() {
     //Logon
 
     const btnSaveUsername = document.getElementsByName('btnSendUsername')[0];
+    const txtUsername = document.getElementsByName('txtUsername')[0];
 
-    btnSaveUsername.addEventListener('click', function(e) {
-        alert('JOJO');
+    btnSaveUsername.addEventListener('click', function (e) {
+        alert(txtUsername.value);
     });
 
 
@@ -72,4 +73,72 @@ document.addEventListener('DOMContentLoaded', function() {
         context.drawImage(image, 100 * spriteIndex, 0, 100, 100, 0, 0, canvas.width, canvas.height);
     }
     requestAnimationFrame(displayCharacters);
+
+    // Function to get GEO position
+    function getPosition() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const userPosition = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    };
+                    getCountry(userPosition);
+                },
+                function () {
+                    alert("Could not get your position. Setting your default position as Martigny !");
+                    const userPosition = {
+                        latitude: 46.1044,
+                        longitude: 7.07
+                    };
+                    getCountry(userPosition);
+                }
+            )
+        }
+    }
+    getPosition(); // Call the function to get the geoposition
+
+
+    const titleOfKingdom = document.getElementsByClassName("titleOfKingdom")[0];
+
+    // function to get the country of the position
+    function getCountry(userPosition) {
+        const request = new XMLHttpRequest();
+        request.open("GET", `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${userPosition.latitude}&longitude=${userPosition.longitude}&localityLanguage=en`);
+        request.send();
+
+        request.addEventListener("load", function () {
+            const data = JSON.parse(this.responseText);
+            const countryName = data.countryName;
+            titleOfKingdom.innerHTML = countryName;
+            getFlag(countryName);
+        });
+    }
+
+    let flagUrl;
+    // function to get the flag
+    function getFlag(countryName) {
+        const requestFlag = new XMLHttpRequest();
+        requestFlag.open("GET", `https://restcountries.eu/rest/v2/name/${countryName}`);
+
+        requestFlag.send();
+        requestFlag.addEventListener("load", function () {
+            const data = JSON.parse(this.responseText);
+            flagUrl = data[0].flag;
+
+            const html = `<img class="countryImg" src="${flagUrl}"/>`;
+            titleOfKingdom.insertAdjacentHTML("afterend", html);
+        });
+    }
+
+    const btnContinue = document.getElementsByClassName('btnContinue')[0];
+
+    btnContinue.addEventListener('click', function (e) {
+        const userInfo = {
+            username: txtUsername.value,
+            kingdomFlag: flagUrl
+        }
+
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    });
 });

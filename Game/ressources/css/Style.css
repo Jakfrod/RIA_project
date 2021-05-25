@@ -43,6 +43,19 @@ h2 {
     text-align: center
 }
 
+.countryImg {
+    width: 250pt;
+    height: 150pt;
+    object-fit: cover;
+}
+
+h3 {
+    font-family: 'Permanent Marker', arial;
+    color: #fff;
+    font-size: 36pt;
+    text-align: center
+}
+
 #canvas {
     width: 100%;
     display: flex;
