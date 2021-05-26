@@ -72,3 +72,13 @@ section {
     margin: auto;
     text-align: center;
 }
+
+#sectionGame {
+    width: 80%;
+}
+
+#gameCanvas {
+    background-color: aquamarine;
+    height: auto;
+    min-width: 80%;
+}
