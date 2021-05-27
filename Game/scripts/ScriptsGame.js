@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Sprite class
     const sprites = {
         width: 100,
-        height,
+        height: 100,
         idle: {
             x: 0,
             y: 0
@@ -43,18 +43,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Game objects
     var hero = {
-        x: canvas.width / 10 - sprites.width / 2, // Initialize x position of the hero
-        y: canvas.height / 2 - sprites.height / 2, //Initialize y position of the hero
+        width: 50,
+        height: 50,
         speed: 10, // movement in pixels per second
         sprites: sprites.idle // Initialize the animation 
     };
+    hero.x = canvas.width / 2 - hero.width / 2; // Initialize x position of the hero
+    hero.y = canvas.height / 2 - hero.height / 2; //Initialize y position of the hero
 
     // Handle keyboard controls
     var keysDown = {};
 
     addEventListener("keydown", function(e) {
         keysDown[e.keyCode] = true;
-        console.log(keysDown);
     }, false);
 
     addEventListener("keyup", function(e) {
@@ -131,7 +132,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Let's play this game!
     var then = Date.now();
-    reset();
     main();
 
 
