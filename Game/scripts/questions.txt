@@ -1,0 +1,2 @@
+Question BPMS :
+Default flow : Comment le comprendre ? Technique ou réalité ? ou le mettre ou l'éviter ?

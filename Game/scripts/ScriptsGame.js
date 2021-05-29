@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         waitAttack: {
             x: 0,
-            y: 300
+            y: 200
         },
         attack: {
             x: 400,
-            y: 300
+            y: 200
         },
         die: {
             x: 0,
@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
         width: 50,
         height: 50,
         speed: 10, // movement in pixels per second
-        sprites: sprites.idle // Initialize the animation 
+        sprites: sprites.idle, // Initialize the animation 
+        isAttacking: false
     };
     hero.x = canvas.width / 2 - hero.width / 2; // Initialize x position of the hero
     hero.y = canvas.height / 2 - hero.height / 2; //Initialize y position of the hero
@@ -64,28 +65,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update game objects
     var update = function(modifier) {
+        //the attack has more precedence than the deplacement
+        if (32 in keysDown) {
+            changeSprites(sprites.waitAttack);
+        } else if ((hero.sprites == sprites.waitAttack && !(32 in keysDown)) || hero.isAttacking) {
+            hero.isAttacking = true;
+            changeSprites(sprites.attack);
+            console.log(currentSprite)
+            if (currentSprite == maxSprite - 1)
+                hero.isAttacking = false;
+        } else if (!hero.isAttacking) {
+            if (38 in keysDown || 40 in keysDown || 37 in keysDown || 39 in keysDown) {
+                if (38 in keysDown) { // Player holding up
+                    hero.y -= hero.speed * modifier;
+                    if (hero.y < 0)
+                        hero.y = 0;
+                }
+                if (40 in keysDown) { // Player holding down
+                    hero.y += hero.speed * modifier;
+                    if (hero.y > canvas.height - hero.height)
+                        hero.y = canvas.height - hero.height;
+                }
+                if (37 in keysDown) { // Player holding left
+                    hero.x -= hero.speed * modifier;
+                    if (hero.x < 0)
+                        hero.x = 0;
+                }
+                if (39 in keysDown) { // Player holding right
+                    hero.x += hero.speed * modifier;
+                    if (hero.x > canvas.width - hero.width)
+                        hero.x = canvas.width - hero.width;
+                }
+                changeSprites(sprites.run);
 
-        if (38 in keysDown || 40 in keysDown || 37 in keysDown || 39 in keysDown) {
-            if (38 in keysDown) { // Player holding up
-                hero.y -= hero.speed * modifier;
-            }
-            if (40 in keysDown) { // Player holding down
-                hero.y += hero.speed * modifier;
-            }
-            if (37 in keysDown) { // Player holding left
-                hero.x -= hero.speed * modifier;
-                angle = 0;
-            }
-            if (39 in keysDown) { // Player holding right
-                hero.x += hero.speed * modifier;
-                angle = 90;
-            }
-            changeSprites(sprites.run);
+            } else {
+                changeSprites(sprites.idle);
 
-        } else {
-            changeSprites(sprites.idle);
-
+            }
         }
+
     };
     // Change the animation of the hero if the animation is already on going we simply changed the sprite
     function changeSprites(testSprite) {
@@ -93,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
             currentSprite = Math.floor(gameFrame / changedFrame) % maxSprite;
         } else {
             hero.sprites = testSprite;
+            currentSprite = 0;
         }
     }
     // Draw everything
