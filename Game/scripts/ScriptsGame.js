@@ -36,11 +36,14 @@ document.addEventListener('DOMContentLoaded', function() {
     //Load the heroSprites
     let heroReady;
     const heroSprites = new Image();
-    heroSprites.onload = function() {
+
+    heroSprites.src = 'ressources/images/characters/HeavyBandit.png'
+    const heroSpritesInverse = new Image();
+    heroSpritesInverse.onload = function() {
         heroReady = true;
     }
-    heroSprites.src = 'ressources/images/characters/HeavyBandit.png'
-
+    heroSpritesInverse.src = 'ressources/images/characters/HeavyBanditInverse.png'
+    let currentHeroSprites = heroSprites;
     // Game objects
     var hero = {
         width: 50,
@@ -66,14 +69,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update game objects
     var update = function(modifier) {
         //the attack has more precedence than the deplacement
-        if (32 in keysDown) {
-            changeSprites(sprites.waitAttack);
-        } else if ((hero.sprites == sprites.waitAttack && !(32 in keysDown)) || hero.isAttacking) {
+        if ((hero.sprites == sprites.waitAttack && !(32 in keysDown)) || hero.isAttacking) {
             hero.isAttacking = true;
             changeSprites(sprites.attack);
             console.log(currentSprite)
             if (currentSprite == maxSprite - 1)
                 hero.isAttacking = false;
+        } else if (32 in keysDown) {
+            changeSprites(sprites.waitAttack);
         } else if (!hero.isAttacking) {
             if (38 in keysDown || 40 in keysDown || 37 in keysDown || 39 in keysDown) {
                 if (38 in keysDown) { // Player holding up
@@ -88,11 +91,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 if (37 in keysDown) { // Player holding left
                     hero.x -= hero.speed * modifier;
+                    currentHeroSprites = heroSprites;
                     if (hero.x < 0)
                         hero.x = 0;
                 }
                 if (39 in keysDown) { // Player holding right
                     hero.x += hero.speed * modifier;
+                    currentHeroSprites = heroSpritesInverse;
                     if (hero.x > canvas.width - hero.width)
                         hero.x = canvas.width - hero.width;
                 }
@@ -120,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
         //TODO: Do the background 
 
         if (heroReady) {
-            context.drawImage(heroSprites, hero.sprites.x + 100 * currentSprite, hero.sprites.y, 100, 100, hero.x, hero.y, 50, 50);
+            context.drawImage(currentHeroSprites, hero.sprites.x + 100 * currentSprite, hero.sprites.y, 100, 100, hero.x, hero.y, 50, 50);
         }
 
         //TODO: The monsters
