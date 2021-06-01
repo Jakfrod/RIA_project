@@ -1,27 +1,62 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Sprite class
-    const sprites = {
+    const spritesHero = {
         width: 100,
         height: 100,
         idle: {
             x: 0,
-            y: 0
+            y: 0,
+            number: 4
         },
         run: {
             x: 0,
-            y: 100
+            y: 100,
+            number: 4
         },
         waitAttack: {
             x: 0,
-            y: 200
+            y: 200,
+            number: 4
         },
         attack: {
             x: 400,
-            y: 200
+            y: 200,
+            number: 4
         },
         die: {
             x: 0,
-            y: 400
+            y: 400,
+            number: 4
+        }
+    }
+    const spritesMonster = {
+        width: 150,
+        height: 150,
+        idle: {
+            x: 0,
+            y: 0,
+            number: 8
+        },
+        run: {
+            x: 0,
+            y: 150,
+            number: 8
+        },
+
+        attack: {
+            x: 0,
+            y: 300,
+            number: 8
+        },
+        takeHit: {
+            x: 0,
+            y: 450,
+            number: 4
+        },
+        die: {
+            x: 600,
+            y: 450,
+            number: 4
         }
     }
 
@@ -43,18 +78,42 @@ document.addEventListener('DOMContentLoaded', function() {
         heroReady = true;
     }
     heroSpritesInverse.src = 'ressources/images/characters/HeavyBanditInverse.png'
-    let currentHeroSprites = heroSprites;
+    let currentHeroSprites = heroSpritesInverse;
+
+    //Load the monsterSprites
+    let monsterReady;
+    const monsterSprites = new Image();
+
+    monsterSprites.src = 'ressources/images/opponents/EyeMonster.png'
+    const monsterSpritesInverse = new Image();
+    monsterSprites.onload = function() {
+        monsterReady = true;
+    }
+    monsterSpritesInverse.src = 'ressources/images/opponents/EyeMonsterInverse.png'
+    let currentMonsterSprites = monsterSprites;
+
     // Game objects
     var hero = {
         width: 50,
         height: 50,
         speed: 10, // movement in pixels per second
-        sprites: sprites.idle, // Initialize the animation 
-        isAttacking: false
+        sprites: spritesHero.idle, // Initialize the animation 
+        isAttacking: false,
+        currentSprite: 0
     };
-    hero.x = canvas.width / 2 - hero.width / 2; // Initialize x position of the hero
+    hero.x = canvas.width / 4 - hero.width / 2; // Initialize x position of the hero
     hero.y = canvas.height / 2 - hero.height / 2; //Initialize y position of the hero
-
+    //Monster
+    var monster = {
+        width: 50,
+        height: 50,
+        speed: 8, // movement in pixels per second
+        sprites: spritesMonster.idle, // Initialize the animation 
+        isAttacking: false,
+        currentSprite: 0
+    };
+    monster.x = canvas.width / 4 + (Math.random() * (canvas.width - monster.width)); // Initialize x position of the hero
+    monster.y = Math.random() * (canvas.height - monster.height); //Initialize y position of the hero
     // Handle keyboard controls
     var keysDown = {};
 
@@ -69,14 +128,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update game objects
     var update = function(modifier) {
         //the attack has more precedence than the deplacement
-        if ((hero.sprites == sprites.waitAttack && !(32 in keysDown)) || hero.isAttacking) {
+        if ((hero.sprites == spritesHero.waitAttack && !(32 in keysDown)) || hero.isAttacking) {
             hero.isAttacking = true;
-            changeSprites(sprites.attack);
+            changeSprites(hero, spritesHero.attack);
             console.log(currentSprite)
-            if (currentSprite == maxSprite - 1)
+            if (hero.currentSprite == maxSprite - 1)
                 hero.isAttacking = false;
         } else if (32 in keysDown) {
-            changeSprites(sprites.waitAttack);
+            changeSprites(hero, spritesHero.waitAttack);
         } else if (!hero.isAttacking) {
             if (38 in keysDown || 40 in keysDown || 37 in keysDown || 39 in keysDown) {
                 if (38 in keysDown) { // Player holding up
@@ -101,22 +160,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (hero.x > canvas.width - hero.width)
                         hero.x = canvas.width - hero.width;
                 }
-                changeSprites(sprites.run);
+                changeSprites(hero, spritesHero.run);
 
             } else {
-                changeSprites(sprites.idle);
+                changeSprites(hero, spritesHero.idle);
 
             }
         }
 
     };
+    var updateMonster = function() {
+        changeSprites(monster, spritesMonster.idle);
+    };
     // Change the animation of the hero if the animation is already on going we simply changed the sprite
-    function changeSprites(testSprite) {
-        if (hero.sprites == testSprite) {
-            currentSprite = Math.floor(gameFrame / changedFrame) % maxSprite;
+    function changeSprites(character, testSprite) {
+        if (character.sprites == testSprite) {
+            character.currentSprite = Math.floor(gameFrame / changedFrame) % testSprite.number;
         } else {
-            hero.sprites = testSprite;
-            currentSprite = 0;
+            character.sprites = testSprite;
+            character.currentSprite = 0;
         }
     }
     // Draw everything
@@ -125,11 +187,14 @@ document.addEventListener('DOMContentLoaded', function() {
         //TODO: Do the background 
 
         if (heroReady) {
-            context.drawImage(currentHeroSprites, hero.sprites.x + 100 * currentSprite, hero.sprites.y, 100, 100, hero.x, hero.y, 50, 50);
+            context.drawImage(currentHeroSprites, hero.sprites.x + 100 * hero.currentSprite, hero.sprites.y, 100, 100, hero.x, hero.y, 50, 50);
         }
 
         //TODO: The monsters
-
+        if (monsterReady) {
+            context.drawImage(currentMonsterSprites, monster.sprites.x + 150 * monster.currentSprite, monster.sprites.y, 100, 100, monster.x, monster.y, 75, 75);
+            console.log(monster.currentSprite);
+        }
         //TODO: Create the system of score
 
     };
@@ -141,6 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var delta = now - then;
 
         update(delta / 100);
+        updateMonster(delta / 100)
         render();
 
         then = now;

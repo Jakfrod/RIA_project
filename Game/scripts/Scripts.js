@@ -1,4 +1,25 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
+    // info we will send to the game
+    const userInfo = {
+            username: "",
+            imagePath: "",
+            kingdomFlag: "",
+        }
+        //Logon
+
+    const btnSaveUsername = document.getElementsByName('btnSendUsername')[0];
+    const txtUsername = document.getElementsByName('txtUsername')[0];
+
+    btnSaveUsername.addEventListener('click', function(e) {
+        if (txtUsername.checkValidity() === false) {
+            return
+        }
+        userInfo.username = txtUsername.value;
+        document.getElementById("selectCharacter").hidden = false;
+        document.getElementById("sectionLogin").hidden = true;
+
+    });
+
     //Define the drag and drop zone
     let selectCharacters;
     const canvasZone = document.getElementById("canvas");
@@ -30,15 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
     for (const element of elementsDragable) {
         element.ondragstart = drag;
     }
-    //Logon
-
-    const btnSaveUsername = document.getElementsByName('btnSendUsername')[0];
-    const txtUsername = document.getElementsByName('txtUsername')[0];
-
-    btnSaveUsername.addEventListener('click', function (e) {
-        alert(txtUsername.value);
-    });
-
 
     //Load Canvas to choose the character
     //Get the canvas 
@@ -74,18 +86,40 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     requestAnimationFrame(displayCharacters);
 
+    //Choose character parts
+
+    const btnChooseCharacter = document.getElementsByName("btnChooseCharacter")[0];
+    btnChooseCharacter.addEventListener("click", function() {
+        if (dropZone.children.length == 0 || selectCharacters === '') {
+            alert("Select a character !!!!!!!!");
+            return;
+        }
+        switch (selectCharacters) {
+            case 'canvasCharacter1':
+                userInfo.imagePath = character1Image.src;
+                break;
+            case 'canvasCharacter2':
+                userInfo.imagePath = character1Image.src;
+                break;
+
+        }
+        document.getElementById("showKingdom").hidden = false;
+        document.getElementById("selectCharacter").hidden = true;
+    });
+
+
     // Function to get GEO position
     function getPosition() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                function (position) {
+                function(position) {
                     const userPosition = {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude
                     };
                     getCountry(userPosition);
                 },
-                function () {
+                function() {
                     alert("Could not get your position. Setting your default position as Martigny !");
                     const userPosition = {
                         latitude: 46.1044,
@@ -107,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
         request.open("GET", `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${userPosition.latitude}&longitude=${userPosition.longitude}&localityLanguage=en`);
         request.send();
 
-        request.addEventListener("load", function () {
+        request.addEventListener("load", function() {
             const data = JSON.parse(this.responseText);
             const countryName = data.countryName;
             titleOfKingdom.innerHTML = countryName;
@@ -122,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
         requestFlag.open("GET", `https://restcountries.eu/rest/v2/name/${countryName}`);
 
         requestFlag.send();
-        requestFlag.addEventListener("load", function () {
+        requestFlag.addEventListener("load", function() {
             const data = JSON.parse(this.responseText);
             flagUrl = data[0].flag;
 
@@ -133,12 +167,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const btnContinue = document.getElementsByClassName('btnContinue')[0];
 
-    btnContinue.addEventListener('click', function (e) {
-        const userInfo = {
-            username: txtUsername.value,
-            kingdomFlag: flagUrl
-        }
+    btnContinue.addEventListener('click', function(e) {
 
+        userInfo.kingdomFlag = flagUrl;
         localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        document.location.href = "./game.html";
     });
 });

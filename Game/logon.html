@@ -19,10 +19,10 @@
         <header>
             <h2>What is your name hero ?</h2>
         </header>
-        <input name="txtUsername" type="text" placeholder="Your username: Marco, Polo, Terminiator, ..." />
+        <input name="txtUsername" type="text" placeholder="Your username: Marco, Polo, Terminiator, ..." required />
         <input name="btnSendUsername" type="button" value="I want this name !" />
     </section>
-    <section id="selectCharacter">
+    <section id="selectCharacter" hidden>
         <header>
             <h2>Choose your character</h2>
         </header>
@@ -33,17 +33,11 @@
         <div id="dropZone"></div>
         <input name="btnChooseCharacter" type="button" value="I want this knight !" />
     </section>
-    <section id="showKingdom">
-
+    <section id="showKingdom" hidden>
         <header>
             <h2>This is your Kingdom !</h2>
         </header>
-
-        <h3 class="titleOfKingdom" \>
-
-    </section>
-
-    <section id="continue">
+        <h3 class="titleOfKingdom"></h3>
         <input class="btnContinue" type="button" value="continue">
     </section>
 </body>
