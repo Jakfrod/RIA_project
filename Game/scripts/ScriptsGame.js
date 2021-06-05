@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
     if (userInfo == null)
-        document.location.href = "./logon.html";
+        document.location.href = './logon.html';
 
     // Sprite class
     const spritesHero = {
@@ -72,35 +72,35 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     //List of rewards the player can win
     const rewards = [{
-            text: "you win 1 heart.",
+            text: 'you win 1 heart.',
             image: new Image(),
             action: function() {
                 hero.life += 1;
             }
         },
         {
-            text: "you win more speed !",
+            text: 'you win more speed !',
             image: new Image(),
             action: function() {
                 hero.speed += 1;
             }
         },
         {
-            text: "You get only an apple this time !",
+            text: 'You get only an apple !',
             image: new Image(),
             action: function() {}
         }
     ];
-    rewards[0].image.src = "ressources/images/items/hp.png";
-    rewards[1].image.src = "ressources/images/items/boots.png";
-    rewards[2].image.src = "ressources/images/items/apple.png"
+    rewards[0].image.src = 'ressources/images/items/hp.png';
+    rewards[1].image.src = 'ressources/images/items/boots.png';
+    rewards[2].image.src = 'ressources/images/items/apple.png'
 
     const background = new Image();
     let backgroundReady;
     background.onload = function() {
         backgroundReady = true;
     };
-    background.src = "ressources/images/backgroundgame.png";
+    background.src = 'ressources/images/backgroundgame.png';
 
     let actionOVer;
     let score = 1; //Number of room the player is currently. When the played die, we need to decrement of 1 to have the number of cleaned room
@@ -172,11 +172,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle keyboard controls
     var keysDown = {};
 
-    addEventListener("keydown", function(e) {
+    addEventListener('keydown', function(e) {
         keysDown[e.keyCode] = true;
     }, false);
 
-    addEventListener("keyup", function(e) {
+    addEventListener('keyup', function(e) {
         delete keysDown[e.keyCode];
     }, false);
 
@@ -241,15 +241,13 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     var updateMonster = function(modifier) {
         if (monster.life == 0) {
-            changeSprites(monster, spritesMonster.die)
-            if (monster.currentSprite == spritesMonster.die.number - 1)
+            if (changeSprites(monster, spritesMonster.die))
                 monster.isDead = true;
             return;
         }
 
         if (monster.isTakingDamage) {
-            changeSprites(monster, spritesMonster.takeHit)
-            if (monster.currentSprite == spritesMonster.takeHit.number - 1)
+            if (changeSprites(monster, spritesMonster.takeHit))
                 monster.isTakingDamage = false;
             return;
         }
@@ -308,12 +306,12 @@ document.addEventListener('DOMContentLoaded', function() {
         context.textAlign = 'center';
         context.textBaseline = 'bottom';
         context.fillStyle = 'red';
-        context.fillText("GameOver !", canvas.width / 2, canvas.height / 2 + sizeText);
+        context.fillText('GameOver !', canvas.width / 2, canvas.height / 2 + sizeText);
         context.font = `${sizeText/2}px Permanent Marker`;
         context.textAlign = 'center';
         context.textBaseline = 'top';
         context.fillStyle = 'white';
-        context.fillText("Click on Enter...", canvas.width / 2 + 1.5 * sizeText, canvas.height / 2 + sizeText);
+        context.fillText('Click on Enter...', canvas.width / 2 + 1.5 * sizeText, canvas.height / 2 + sizeText);
     }
 
     // Render the clean scene
@@ -324,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
         context.textAlign = 'center';
         context.textBaseline = 'bottom';
         context.fillStyle = 'green';
-        context.fillText("Room cleaned !", canvas.width / 2, canvas.height / 2 + sizeText);
+        context.fillText('Room cleaned !', canvas.width / 2, canvas.height / 2 + sizeText);
         const itemWidth = itemHeight = 50;
         context.drawImage(reward.image, 0, 0, reward.image.width, reward.image.height, canvas.width / 2 - itemWidth / 2, canvas.height / 2 - itemHeight, itemWidth, itemHeight)
         context.font = `${sizeText/2}px Permanent Marker`;
@@ -332,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
         context.textBaseline = 'top';
         context.fillStyle = 'white';
         context.fillText(reward.text, canvas.width / 2 + 1.5 * sizeText, canvas.height / 2 + sizeText);
-        context.fillText("Click on Enter...", canvas.width / 2, canvas.height / 2 + sizeText * 1.5)
+        context.fillText('Click on Enter...', canvas.width / 2, canvas.height / 2 + sizeText * 1.5)
 
     }
     var resetRoom = function() {
@@ -372,8 +370,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     };
     let gameOverAction = function() {
-        localStorage.setItem("score", score);
-        document.location.href = "./Ranking.html";
+        localStorage.setItem('score', score);
+        document.location.href = './ranking.html';
     }
     let touchEnter = function() {
         if (13 in keysDown) {

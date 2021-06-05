@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     // info we will send to the game
     const userInfo = {
-            username: "",
-            imagePath: "",
-            kingdomFlag: "",
+            username: '',
+            imagePath: '',
+            kingdomFlag: '',
         }
         //Logon
 
@@ -15,39 +15,39 @@ document.addEventListener('DOMContentLoaded', function() {
             return
         }
         userInfo.username = txtUsername.value;
-        document.getElementById("selectCharacter").hidden = false;
-        document.getElementById("sectionLogin").hidden = true;
+        document.getElementById('selectCharacter').hidden = false;
+        document.getElementById('sectionLogin').hidden = true;
 
     });
 
     //Define the drag and drop zone
     let selectCharacters;
-    const canvasZone = document.getElementById("canvas");
+    const canvasZone = document.getElementById('canvas');
 
     function allowDrop(ev) {
         ev.preventDefault();
     }
 
     function drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
+        ev.dataTransfer.setData('text', ev.target.id);
     }
 
     function drop(ev) {
         ev.preventDefault();
-        if (ev.dataTransfer.getData("text") == selectCharacters)
+        if (ev.dataTransfer.getData('text') == selectCharacters)
             return;
         if (dropZone.children.length != 0) {
             canvasZone.appendChild(ev.target);
-            dropZone.innerHTML = "";
+            dropZone.innerHTML = '';
         }
-        selectCharacters = ev.dataTransfer.getData("text");
+        selectCharacters = ev.dataTransfer.getData('text');
         dropZone.appendChild(document.getElementById(selectCharacters));
     }
-    const dropZone = document.getElementById("dropZone");
+    const dropZone = document.getElementById('dropZone');
     dropZone.ondrop = drop;
     dropZone.ondragover = allowDrop;
 
-    const elementsDragable = document.getElementsByClassName("js-dragable");
+    const elementsDragable = document.getElementsByClassName('js-dragable');
     for (const element of elementsDragable) {
         element.ondragstart = drag;
     }
@@ -88,10 +88,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //Choose character parts
 
-    const btnChooseCharacter = document.getElementsByName("btnChooseCharacter")[0];
-    btnChooseCharacter.addEventListener("click", function() {
+    const btnChooseCharacter = document.getElementsByName('btnChooseCharacter')[0];
+    btnChooseCharacter.addEventListener('click', function() {
         if (dropZone.children.length == 0 || selectCharacters === '') {
-            alert("Select a character !!!!!!!!");
+            alert('Select a character !!!!!!!!');
             return;
         }
         switch (selectCharacters) {
@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
 
         }
-        document.getElementById("showKingdom").hidden = false;
-        document.getElementById("selectCharacter").hidden = true;
+        document.getElementById('showKingdom').hidden = false;
+        document.getElementById('selectCharacter').hidden = true;
     });
 
 
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     getCountry(userPosition);
                 },
                 function() {
-                    alert("Could not get your position. Setting your default position as Martigny !");
+                    alert('Could not get your position. Setting your default position as Martigny !');
                     const userPosition = {
                         latitude: 46.1044,
                         longitude: 7.07
@@ -134,15 +134,15 @@ document.addEventListener('DOMContentLoaded', function() {
     getPosition(); // Call the function to get the geoposition
 
 
-    const titleOfKingdom = document.getElementsByClassName("titleOfKingdom")[0];
+    const titleOfKingdom = document.getElementsByClassName('titleOfKingdom')[0];
 
     // function to get the country of the position
     function getCountry(userPosition) {
         const request = new XMLHttpRequest();
-        request.open("GET", `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${userPosition.latitude}&longitude=${userPosition.longitude}&localityLanguage=en`);
+        request.open('GET', `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${userPosition.latitude}&longitude=${userPosition.longitude}&localityLanguage=en`);
         request.send();
 
-        request.addEventListener("load", function() {
+        request.addEventListener('load', function() {
             const data = JSON.parse(this.responseText);
             const countryName = data.countryName;
             titleOfKingdom.innerHTML = countryName;
@@ -154,16 +154,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // function to get the flag
     function getFlag(countryName) {
         const requestFlag = new XMLHttpRequest();
-        requestFlag.open("GET", `https://restcountries.eu/rest/v2/name/${countryName}`);
+        requestFlag.open('GET', `https://restcountries.eu/rest/v2/name/${countryName}`);
 
         requestFlag.send();
-        requestFlag.addEventListener("load", function() {
+        requestFlag.addEventListener('load', function() {
             const data = JSON.parse(this.responseText);
             flagUrl = data[0].flag;
 
             const html = `<img class="countryImg" src="${flagUrl}"/>`;
             userInfo.kingdomFlag = flagUrl;
-            titleOfKingdom.insertAdjacentHTML("afterend", html);
+            titleOfKingdom.insertAdjacentHTML('afterend', html);
         });
     }
 
@@ -173,6 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         userInfo.kingdomFlag = flagUrl;
         localStorage.setItem('userInfo', JSON.stringify(userInfo));
-        document.location.href = "./game.html";
+        document.location.href = './game.html';
     });
 });
