@@ -56,6 +56,22 @@ h3 {
     text-align: center
 }
 
+p {
+    font-family: 'Permanent Marker', arial;
+    color: #fff;
+}
+
+.flagranks {
+    max-width: 50px;
+}
+
+#ranksTable {
+    font-family: 'Permanent Marker', arial;
+    color: #fff;
+    border: "2px solid";
+    width: 100%;
+}
+
 #canvas {
     width: 100%;
     display: flex;
@@ -87,11 +103,12 @@ section {
 }
 
 #sectionGame {
-    width: 80%;
+    width: 90vw;
+    height: 90Vh;
 }
 
 #gameCanvas {
-    background-color: aquamarine;
+    background-color: black;
     height: auto;
     min-width: 80%;
 }

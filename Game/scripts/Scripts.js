@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 userInfo.imagePath = character1Image.src;
                 break;
             case 'canvasCharacter2':
-                userInfo.imagePath = character1Image.src;
+                userInfo.imagePath = character2Image.src;
                 break;
 
         }
@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         latitude: 46.1044,
                         longitude: 7.07
                     };
+
                     getCountry(userPosition);
                 }
             )
@@ -161,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
             flagUrl = data[0].flag;
 
             const html = `<img class="countryImg" src="${flagUrl}"/>`;
+            userInfo.kingdomFlag = flagUrl;
             titleOfKingdom.insertAdjacentHTML("afterend", html);
         });
     }
