@@ -121,7 +121,8 @@ document.addEventListener('DOMContentLoaded', function() {
     heroSpritesInverse.onload = function() {
         heroReady = true;
     }
-    heroSpritesInverse.src = heroSprites.src.replace('.', 'Inverse.');
+    let lastPoint = heroSprites.src.lastIndexOf('.');
+    heroSpritesInverse.src = heroSprites.src.substring(0, lastPoint) + 'Inverse' + heroSprites.src.substring(lastPoint);;
     let currentHeroSprites = heroSpritesInverse;
 
     //Load the monsterSprites
