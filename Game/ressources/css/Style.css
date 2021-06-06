@@ -103,11 +103,13 @@ section {
 }
 
 #sectionGame {
+    margin-top: 5vh;
     width: 90vw;
     height: 90Vh;
 }
 
 #gameCanvas {
+    margin-top: 5vh;
     background-color: black;
     height: auto;
     min-width: 80%;
