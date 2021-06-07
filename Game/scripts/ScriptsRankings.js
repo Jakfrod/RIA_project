@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'score': score
     };
 
-    var renderRanking = function(idParent, no, ranking) {
+    function renderRanking(idParent, no, ranking) {
         var ligne = '<tr>' +
             `<td>${no}</td>` +
             `<td><img src="${ranking.kingdomFlag}" class="flagranks"/></td>` +
@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 rankings.splice(ranking, 1);
             }
         }
-        console.log(rankings[ranking].score)
         if (rankings[ranking].score < currentPlayer.score && !isRegistered) {
             rankings.splice(ranking, 0, currentPlayer);
             isRegistered = true;
