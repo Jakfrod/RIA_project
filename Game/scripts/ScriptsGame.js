@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, false);
 
     const attackAudio = new Audio("ressources/sounds/PlayerFight.wav");
-    const monsterDeath = new Audio("ressources/sounds/MonterDeath.wav");
+    const monsterDeath = new Audio("ressources/sounds/MonsterDeath.wav");
     const monsterFight = new Audio("ressources/sounds/MonsterFight.wav");
     const monsterHurt = new Audio("ressources/sounds/MonsterHurt.wav");
     const playerDeath = new Audio("ressources/sounds/PlayerDeath.wav");
@@ -199,9 +199,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (hero.isTakingDamage) {
-            playerHurt.play();
-            if (!changeSprites(hero, spritesHero.takeHit))
+
+            if (!changeSprites(hero, spritesHero.takeHit)) {
+                playerHurt.play();
                 hero.isTakingDamage = false;
+            }
             return;
         }
 
@@ -263,17 +265,17 @@ document.addEventListener('DOMContentLoaded', function() {
         if (monster.isTakingDamage) {
             if (changeSprites(monster, spritesMonster.takeHit)) {
                 monsterHurt.play();
-                if (monster.currentSprite == spritesMonster.takeHit.number - 1)
-                    monster.isTakingDamage = false;
+                monster.isTakingDamage = false;
             }
             return;
         }
         let distance = Math.pow(Math.pow(monster.x - hero.x, 2) + Math.pow(monster.y - hero.y, 2), 0.5);
-        console.log(monster.cooldown);
-        console.log(distance);
+
         if (((20 >= distance && monster.cooldown <= 0) || monster.isAttacking)) {
             monster.isAttacking = !changeSprites(monster, spritesMonster.attack);
-            monsterFight.play();
+            if (!monster.isAttacking) {
+                monsterFight.play();
+            }
             if (distance <= 20) {
                 if (!monster.isAttacking) {
                     hero.isTakingDamage = true;
