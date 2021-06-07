@@ -10,7 +10,7 @@ The finished product and the content used to produce it was limited by our own p
 
 ### Game's objective
 
-The player embodies a character who must pass several levels while fighting various monsters. The goal is very simple, not to die. Thus, the player who passes the most levels without dying will have the highest score. 
+The player embodies a character who must pass several levels while fighting a monster. The goal is very simple, not to die. Thus, the player who passes the most levels without dying will have the highest score. 
 
 ### Characters
 
@@ -18,7 +18,7 @@ The player can choose between two characters, the first is a fearsome monster hu
 
 ### Rules
 
-The rules are simple, you must survive each "room" generated. When the player kills all the monsters in the room, a new one is generated until the player dies. The goal is to survive as long as possible, in as many rooms as possible. 
+The rules are simple, you must survive each "room" generated. When the player kills the monster in the room, a new one is generated until the player dies. Every two rooms, the life of the monster increase. The goal is to survive as long as possible, in as many rooms as possible. 
 
 ## Conclusion
 
