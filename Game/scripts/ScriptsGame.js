@@ -226,25 +226,25 @@ document.addEventListener('DOMContentLoaded', function() {
             if (38 in keysDown || 40 in keysDown || 37 in keysDown || 39 in keysDown) {
                 if (38 in keysDown) { // Player holding up
                     hero.y -= hero.speed * modifier;
-                    if (hero.y < 0)
-                        hero.y = 0;
+                    if (hero.y <= hero.height / 2)
+                        hero.y = hero.height / 2;
                 }
                 if (40 in keysDown) { // Player holding down
                     hero.y += hero.speed * modifier;
-                    if (hero.y > canvas.height - hero.height)
-                        hero.y = canvas.height - hero.height;
+                    if (hero.y > canvas.height - hero.height / 2)
+                        hero.y = canvas.height - hero.height / 2;
                 }
                 if (37 in keysDown) { // Player holding left
                     hero.x -= hero.speed * modifier;
                     currentHeroSprites = heroSprites;
-                    if (hero.x < 0)
-                        hero.x = 0;
+                    if (hero.x < hero.width / 2)
+                        hero.x = hero.width / 2;
                 }
                 if (39 in keysDown) { // Player holding right
                     hero.x += hero.speed * modifier;
                     currentHeroSprites = heroSpritesInverse;
-                    if (hero.x > canvas.width - hero.width)
-                        hero.x = canvas.width - hero.width;
+                    if (hero.x > canvas.width - hero.width / 2)
+                        hero.x = canvas.width - hero.width / 2;
                 }
                 changeSprites(hero, spritesHero.run);
             } else {
