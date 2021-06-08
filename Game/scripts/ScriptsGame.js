@@ -93,8 +93,9 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
     rewards[0].image.src = 'ressources/images/items/hp.png';
     rewards[1].image.src = 'ressources/images/items/boots.png';
-    rewards[2].image.src = 'ressources/images/items/apple.png'
+    rewards[2].image.src = 'ressources/images/items/apple.png';
 
+    //Load the background
     const background = new Image();
     let backgroundReady;
     background.onload = function() {
@@ -102,11 +103,10 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     background.src = 'ressources/images/backgroundgame.png';
 
-    let actionOVer;
     let score = 1; //Number of room the player is currently. When the played die, we need to decrement of 1 to have the number of cleaned room
     let endRoom; // variabe that stop the game when the monster or the player is dead
     const changedFrame = 5; //Changed the sprite all the x frames
-    let gameFrame = 0;
+    let gameFrame = 0; //Number of frame called since the start of the game
     //Get canvas and context
     const canvas = document.getElementById('gameCanvas');
     const context = canvas.getContext('2d');
@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     monsterSpritesInverse.src = 'ressources/images/opponents/EyeMonsterInverse.png'
     let currentMonsterSprites = monsterSpritesInverse;
+    //Load the heart icon
     let heartIconReady;
     const heartIcon = new Image();
     heartIcon.onload = function() {
@@ -180,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
     addEventListener('keyup', function(e) {
         delete keysDown[e.keyCode];
     }, false);
-
+    //audios
     const attackAudio = new Audio("ressources/sounds/PlayerFight.wav");
     const monsterDeath = new Audio("ressources/sounds/MonsterDeath.wav");
     const monsterFight = new Audio("ressources/sounds/MonsterFight.wav");
@@ -253,7 +254,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
     };
+    //Update the data of the monster
     var updateMonster = function(modifier) {
+        //When the monster is dead
         if (monster.life == 0) {
             if (changeSprites(monster, spritesMonster.die)) {
                 monsterDeath.play();
@@ -261,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             return;
         }
-
+        //When the monster is taking damage
         if (monster.isTakingDamage) {
             if (changeSprites(monster, spritesMonster.takeHit)) {
                 monsterHurt.play();
@@ -269,8 +272,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             return;
         }
+        //Distance between the monster and the hero
         let distance = Math.pow(Math.pow(monster.x - hero.x, 2) + Math.pow(monster.y - hero.y, 2), 0.5);
-
+        //Attack
         if (((20 >= distance && monster.cooldown <= 0) || monster.isAttacking)) {
             monster.isAttacking = !changeSprites(monster, spritesMonster.attack);
             if (!monster.isAttacking) {
@@ -284,6 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 changeSprites(hero, spritesHero.takeHit);
             }
+            // Deplacement
         } else if (!monster.isAttacking) {
             monster.cooldown -= modifier;
             if (20 <= distance) {
@@ -295,9 +300,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     monster.x -= move;
                     currentMonsterSprites = monsterSpritesInverse;
                 }
-                if (hero.y - monster.y >= 20)
+                if (hero.y - monster.y >= 2)
                     monster.y += move;
-                else if (hero.y - monster.y <= -20)
+                else if (hero.y - monster.y <= -2)
                     monster.y -= move;
                 changeSprites(monster, spritesMonster.run);
             } else

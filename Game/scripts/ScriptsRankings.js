@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+    //Load data
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     const score = JSON.parse(localStorage.getItem('score'));
     let rankings = JSON.parse(localStorage.getItem('rankings'));
+    //Verification of data
     if (userInfo == null) {
         document.location.href = './logon.html';
         return;
@@ -10,13 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.location.href = './game.html';
         return;
     }
-
+    //Create the rank of the current player
     let currentPlayer = {
         'username': userInfo.username,
         'kingdomFlag': userInfo.kingdomFlag,
         'score': score
     };
-
+    //function to create a rank
     function renderRanking(idParent, no, ranking) {
         var ligne = '<tr>' +
             `<td>${no}</td>` +
@@ -26,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
             '</tr>';
         document.getElementById(idParent).innerHTML += ligne;
     }
+    //Verify if there is already data
     if (rankings == null) {
         rankings = [];
         // Data
@@ -40,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'score': 1
         });
     }
+    // Find the actual rank
     let isRegistered = false;
     for (let ranking in rankings) {
 
@@ -55,14 +59,14 @@ document.addEventListener('DOMContentLoaded', function() {
             isRegistered = true;
         }
     }
-
+    // Add data to html
     document.getElementById('myScore').innerHTML = currentPlayer.score - 1;
     localStorage.setItem('rankings', JSON.stringify(rankings));
     localStorage.removeItem('score');
     for (let ranking = 1; ranking <= rankings.length; ranking++) {
         renderRanking('ranksTable', ranking, rankings[ranking - 1]);
     }
-
+    //Event click on buttons
     document.getElementById('btnTryAgain').onclick = function() {
         document.location.href = './game.html';
     };
